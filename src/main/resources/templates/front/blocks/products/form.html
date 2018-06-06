@@ -1,5 +1,5 @@
 <html layout:decorate="~{front/home/index}" xmlns:layout="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.w3.org/1999/xhtml">
+      xmlns:th="http://www.thymeleaf.org">
 <head th:include="front/blocks/header :: header">
 
 </head>
@@ -10,7 +10,25 @@
 
 <div layout:fragment="content">
 <!--TODO-->
-bazajic vernel hamapatasxan variantner@ u cuyc tal vor product sarqeluc francici @ntri
+    <form th:action="@{/product/create}" th:method="POST">
+        <th:block th:each="feature : ${featureVariants}" >
+            <div>
+                <label th:text="${feature.value.name}"></label>
+                <select name="feature" th:name="feature_variant">
+                    <option th:value="NULL" th:text="Select"></option>
+                    <option th:each="option : ${feature.value.variantDtos}" th:text="${option.name}" th:value="${option.id}"></option>
+                    <!--<option th:each="option : ${feature.value.variantDtos}" th:value="${option.id}" th:text="${option.name}"></option>-->
+                </select>
+            </div>
+        </th:block>
+        <input th:type="hidden" name="categoryId" th:value="${category_id}">
+        <input th:type="text" name="price">
+        <input th:type="text" name="name">
+        <input th:type="text" name="description">
+        <input th:type="hidden" name="lang_id" th:value="1">
+        <input th:type="SUBMIT" th:value="Create">
+    </form>
+
 </div>
 <th:block th:replace="front/common/footer :: footer"></th:block>
 <!-- jQuery Plugins -->
@@ -21,16 +39,5 @@ bazajic vernel hamapatasxan variantner@ u cuyc tal vor product sarqeluc francici
 <script th:src="@{http://localhost:8080/eshop/js/jquery.zoom.min.js}"></script>
 <script th:src="@{http://localhost:8080/eshop/js/main.js}"></script>
 </body>
-<style>
-  .categories > ul{
-    display: block !important;
-  }
-</style>
-<script>
-  $(".recoursive").hover(function () {
-    $(this).find(">ul").css("display","block");
-  },function () {
-      $(this).find(">ul").css("display","block");
-  });
-</script>
+
 </html>

@@ -26,11 +26,10 @@ public class CategoryService {
     public CategoryService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
         //this.categoryRepository = categoryRepository;
-
+        //jdbcTemplate.
     }
 
     public List<ProductDto> getProducts(int cid, int page, int itemPerPage){
-
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("SELECT p.*,d.name,d.description " +
                 "from products as p INNER JOIN product_descriptions as d " +
                 "on (p.id = d.product_id) where d.lang_id=? and p.category_id=? LIMIT ?,?", 1, cid, (page - 1) * itemPerPage, itemPerPage);
@@ -75,4 +74,5 @@ public class CategoryService {
             getCateory(categoryDto.getId(),categoryDto.getSubcategories());
         }
     }
+
 }

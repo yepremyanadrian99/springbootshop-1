@@ -1,5 +1,6 @@
 package com.shop.domain.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.*;
 
@@ -23,11 +24,35 @@ public class Product {
     private int status;
 
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    private List<ProductDescription> productDescription;
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private List<ProductDescription> productDescriptions;
+
+    @OneToMany(mappedBy = "product",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    private List<ProductVariantRel> productVariantRels;
+
+    public Product(double price, int userId, int categoryId, int status) {
+        this.price = price;
+        this.userId = userId;
+        this.categoryId = categoryId;
+        this.status = status;
+    }
+
+
 
     public int getUserId() {
         return userId;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public List<ProductVariantRel> getProductVariantRels() {
+        return productVariantRels;
+    }
+
+    public void setProductVariantRels(List<ProductVariantRel> productVariantRels) {
+        this.productVariantRels = productVariantRels;
     }
 
     public void setUserId(int userId) {
@@ -43,11 +68,11 @@ public class Product {
     }
 
     public List<ProductDescription> getProductDescription() {
-        return productDescription;
+        return productDescriptions;
     }
 
     public void setProductDescription(List<ProductDescription> productDescription) {
-        this.productDescription = productDescription;
+        this.productDescriptions = productDescription;
     }
     public int getId() {
         return id;
@@ -89,5 +114,16 @@ public class Product {
         this.status = status;
     }
 
-
+    public void addDescription(ProductDescription desc){
+       if (productDescriptions == null){
+           productDescriptions = new ArrayList<>();
+       }
+       productDescriptions.add(desc);
+    }
+    public void addVariant(ProductVariantRel rel){
+        if (productVariantRels == null){
+            productVariantRels = new ArrayList<>();
+        }
+        productVariantRels.add(rel);
+    }
 }

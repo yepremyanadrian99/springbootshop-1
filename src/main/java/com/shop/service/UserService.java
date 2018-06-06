@@ -29,6 +29,7 @@ public class UserService{
 
 	//@Override
 	public void saveUser(User user) {
+
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		user.setActive(1);
 		Role userRole = roleRepository.findByRole("ADMIN");

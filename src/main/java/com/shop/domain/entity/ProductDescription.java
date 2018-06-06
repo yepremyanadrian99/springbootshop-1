@@ -15,6 +15,13 @@ public class ProductDescription {
     @Column(name = "lang_id")
     private int langId;
 
+    public ProductDescription(Product product,String name, String description, int langId) {
+        this.product = product;
+        this.name = name;
+        this.description = description;
+        this.langId = langId;
+    }
+
     public int getId() {
         return id;
     }
