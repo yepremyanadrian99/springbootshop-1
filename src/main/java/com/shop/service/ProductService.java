@@ -4,7 +4,9 @@ import com.shop.domain.dto.ProductDto;
 import com.shop.domain.entity.Product;
 import com.shop.domain.entity.ProductDescription;
 import com.shop.domain.entity.ProductVariantRel;
+import com.shop.repository.ProductDescriptionRepository;
 import com.shop.repository.ProductRepository;
+import com.shop.repository.ProductVariantRelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,10 @@ public class ProductService {
     private final JdbcTemplate jdbcTemplate;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private ProductDescriptionRepository productDescriptionRepository;
+    @Autowired
+    private ProductVariantRelRepository productVariantRelRepository;
     public ProductService(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -42,20 +48,23 @@ public class ProductService {
         }
         return productDtos;
     }
-    public boolean createProduct(MultiValueMap<String, String> formData){
-//        Product product = new Product();
-//        product.setCategoryId(Integer.parseInt(String.valueOf(formData.get("categoryId"))));
-//        product.setPrice(Double.parseDouble(String.valueOf(formData.get("price"))));
-//        product.setStatus(0);
-//        ProductDescription productDescription = new ProductDescription();
-//        productDescription.setName(String.valueOf(formData.get("name")));
-//        productDescription.setDescription(String.valueOf(formData.get("description")));
-//        productDescription.setLangId(Integer.parseInt(String.valueOf(formData.get("lang_id"))));
-//
-//        product.addDescription(productDescription);
-//        product.addVariant( new ProductVariantRel(1,2));
-//        productRepository.save(product);
-//        System.out.println(1);
+    public boolean createProduct(Product p){
+        Product product =p;
+        List<ProductDescription> productDescriptions = product.getProductDescriptions();
+        List<ProductVariantRel> productVariantRels = product.getProductVariantRels();
+        //remove form data
+        product.setProductDescriptions(null);
+        product.setProductVariantRels(null);
+
+        Product saved = productRepository.save(product);
+        for (ProductDescription productDescription : productDescriptions) {
+            productDescription.setProduct(saved);
+            productDescriptionRepository.save(productDescription);
+        }
+        for (ProductVariantRel productVariantRel : productVariantRels) {
+            productVariantRel.setProduct(saved);
+            productVariantRelRepository.save(productVariantRel);
+        }
         return true;
     }
 }

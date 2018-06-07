@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,10 +19,16 @@ import java.util.Map;
 @Service
 public class CategoryService {
 
+    //TODO get from session
+    private static final int ITEM_PER_PAGE = 5;
+
     private final JdbcTemplate jdbcTemplate;
     @Autowired
     CategoryRepository categoryRepository;
-    //@Autowired
+
+    @Autowired
+    ProductRepository productRepository;
+
     //ProductRepository productRepository;
     private UserRepository userRepository;
     public CategoryService(JdbcTemplate jdbcTemplate) {
@@ -46,10 +54,7 @@ public class CategoryService {
         }
         return productDtos;
     }
-    public Number getCountOf(int cid){
-        List<Map<String, Object>> maps = jdbcTemplate.queryForList("SELECT count(*) as count FROM products p WHERE category_id=?", cid);
-        return (Number) maps.get(0).get("count");
-    }
+
     @Cacheable(cacheNames = "categories")
     public List<CategoryDto> getCategoriesTree(int startingId){
 
@@ -62,7 +67,8 @@ public class CategoryService {
 
     public void getCateory(int parentId,List<CategoryDto> categoryDtos){
 
-        List<Map<String, Object>> maps = jdbcTemplate.queryForList("select c.id,d.name,d.description from categories c inner join category_descriptions d" +
+        List<Map<String, Object>> maps = jdbcTemplate.queryForList("select c.id,d.name,d.description from categories c " +
+                "inner join category_descriptions d" +
                 " on (c.id = d.category_id) where c.parent_id=?", parentId);
         for (Map<String, Object> map : maps) {
             categoryDtos.add(new CategoryDto((int)map.get("id"),(String) map.get("name")));
@@ -73,6 +79,19 @@ public class CategoryService {
 
             getCateory(categoryDto.getId(),categoryDto.getSubcategories());
         }
+    }
+
+    public ModelAndView loadCategory(int category_id,int page_num){
+        int pages_count = productRepository.countByCategoryId(category_id);;
+
+        pages_count = (pages_count%ITEM_PER_PAGE >0) ? pages_count/ITEM_PER_PAGE + 1 : pages_count/ITEM_PER_PAGE;
+
+        List<ProductDto> products = getProducts(category_id, page_num,ITEM_PER_PAGE);
+        ModelAndView modelAndView = new ModelAndView("front/blocks/products/search");
+        modelAndView.addObject("products",products);
+        modelAndView.addObject("pages",pages_count);
+
+        return modelAndView;
     }
 
 }

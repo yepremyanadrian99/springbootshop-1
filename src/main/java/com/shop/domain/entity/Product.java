@@ -24,12 +24,14 @@ public class Product {
     private int status;
 
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<ProductDescription> productDescriptions;
 
     @OneToMany(mappedBy = "product",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<ProductVariantRel> productVariantRels;
 
+    public Product(){}
     public Product(double price, int userId, int categoryId, int status) {
         this.price = price;
         this.userId = userId;
@@ -38,7 +40,13 @@ public class Product {
     }
 
 
+    public List<ProductDescription> getProductDescriptions() {
+        return productDescriptions;
+    }
 
+    public void setProductDescriptions(List<ProductDescription> productDescriptions) {
+        this.productDescriptions = productDescriptions;
+    }
     public int getUserId() {
         return userId;
     }

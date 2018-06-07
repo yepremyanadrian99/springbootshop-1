@@ -17,7 +17,8 @@
                                     <div class="col-md-4" th:each="sub1 : ${category.subcategories}">
                                         <ul class="list-links">
                                             <li>
-                                                <h3 class="list-links-title" th:text="${sub1.name}"></h3></li>
+                                                <a th:href="@{'/category/'+${sub1.id}}"><h3 class="list-links-title" th:text="${sub1.name}"></h3></a>
+                                            </li>
                                             <li th:each="sub2 : ${sub1.subcategories}">
                                                 <a href="#" th:text="${sub2.name}"></a>
                                             </li>

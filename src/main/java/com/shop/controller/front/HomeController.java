@@ -20,9 +20,6 @@ public class HomeController {
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public ModelAndView view(){
-        //userService.getUserById(0);
-        Number countOf = categoryService.getCountOf(1);
-
         List<CategoryDto> categoriesTree = categoryService.getCategoriesTree(0);
 
         ModelAndView modelAndView = new ModelAndView("front/home/index");

@@ -12,10 +12,10 @@ public class ProductVariantRel {
     private int productId;
     @Column(name = "variant_id")
     private int variantId;
-    @ManyToOne
-    @JoinColumn(name = "product_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id",referencedColumnName = "id")
     private Product product;
-
+    public ProductVariantRel(){}
     public ProductVariantRel(int productId, int variantId) {
         this.productId = productId;
         this.variantId = variantId;

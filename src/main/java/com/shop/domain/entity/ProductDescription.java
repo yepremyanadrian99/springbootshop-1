@@ -6,19 +6,28 @@ public class ProductDescription {
     @Id
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id",referencedColumnName = "id",nullable = false)
     private Product product;
-
     private String name;
     private String description;
     @Column(name = "lang_id")
     private int langId;
-
+    public ProductDescription(){}
     public ProductDescription(Product product,String name, String description, int langId) {
         this.product = product;
         this.name = name;
         this.description = description;
+        this.langId = langId;
+    }
+
+
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLangId(int langId) {
         this.langId = langId;
     }
 
@@ -42,9 +51,7 @@ public class ProductDescription {
         return langId;
     }
 
-    public void setLangId(int langId) {
-        this.langId = langId;
-    }
+
 
     public String getName() {
         return name;
@@ -58,16 +65,6 @@ public class ProductDescription {
         return description;
     }
 
-    public void setDescription(String description) {
-        description = description;
-    }
 
-    public int getLang_id() {
-        return langId;
-    }
-
-    public void setLang_id(int langId) {
-        this.langId = langId;
-    }
 
 }

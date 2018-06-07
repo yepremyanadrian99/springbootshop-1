@@ -10,22 +10,21 @@
 
 <div layout:fragment="content">
 <!--TODO-->
-    <form th:action="@{/product/create}" th:method="POST">
+    <form th:action="@{/product/create}" th:method="POST" th:object="${product}">
         <th:block th:each="feature : ${featureVariants}" >
             <div>
                 <label th:text="${feature.value.name}"></label>
-                <select name="feature" th:name="feature_variant">
+                <select th:name="'productVariantRels['+(${feature.key}-1)+'].variantId'">
                     <option th:value="NULL" th:text="Select"></option>
                     <option th:each="option : ${feature.value.variantDtos}" th:text="${option.name}" th:value="${option.id}"></option>
-                    <!--<option th:each="option : ${feature.value.variantDtos}" th:value="${option.id}" th:text="${option.name}"></option>-->
                 </select>
             </div>
         </th:block>
-        <input th:type="hidden" name="categoryId" th:value="${category_id}">
-        <input th:type="text" name="price">
-        <input th:type="text" name="name">
-        <input th:type="text" name="description">
-        <input th:type="hidden" name="lang_id" th:value="1">
+        <input th:value="${category_id}" type="hidden" id="categoryId" name="categoryId">
+        <input th:type="text" th:field="*{price}">
+        <input th:type="text" th:field="*{productDescription[0].name}">
+        <input th:type="text" th:field="*{productDescription[0].description}">
+
         <input th:type="SUBMIT" th:value="Create">
     </form>
 

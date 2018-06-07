@@ -1,8 +1,5 @@
 package com.shop.controller.front;
 
-import com.shop.domain.dto.ProductDto;
-import com.shop.domain.entity.Product;
-import com.shop.repository.ProductRepository;
 import com.shop.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,30 +7,39 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 @Controller
 @RequestMapping("/")
 public class CategoryController {
-    //TODO get from session
-    private static final int ITEM_PER_PAGE = 5;
+
     @Autowired
     private CategoryService categoryService;
+
     @Autowired
-    ProductRepository productRepository;
+    EntityManager entityManager;
     @RequestMapping("/category/{category_id}/{page_num}" )
     public ModelAndView index(@PathVariable(value = "category_id") int category_id
-            , @PathVariable(value = "page_num") int page_num){
-
-        int pages_count = productRepository.countByCategoryId(category_id);;
-
-        pages_count = (pages_count%ITEM_PER_PAGE >0) ? pages_count/ITEM_PER_PAGE + 1 : pages_count/ITEM_PER_PAGE;
-
-        List<ProductDto> products = categoryService.getProducts(category_id, page_num,ITEM_PER_PAGE);
-        ModelAndView modelAndView = new ModelAndView("categories/index");
-        modelAndView.addObject("products",products);
-        modelAndView.addObject("pages",pages_count);
-
+            , @PathVariable(value = "page_num",required = false) int page_num){
+        ModelAndView modelAndView = categoryService.loadCategory(category_id, page_num);
+    //
         return modelAndView;
+    }
+
+    @RequestMapping("/category/{category_id}" )
+    public ModelAndView index(@PathVariable(value = "category_id") int category_id){
+        ModelAndView modelAndView = categoryService.loadCategory(category_id, 1);
+        //
+        return modelAndView;
+    }
+    @RequestMapping("/categorytest" )
+    public String test(){
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Object> query = criteriaBuilder.createQuery();
+        // TypedQuery<Product> select_p_from_product_p = entityManager.createQuery("select p from Product p", Product.class);
+       // System.out.println("select_p_from_product_p = " + select_p_from_product_p);
+        return "sdf";
     }
 }

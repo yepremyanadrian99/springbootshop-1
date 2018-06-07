@@ -21,6 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,22 +45,16 @@ public class ProductController {
 
         ModelAndView modelAndView = new ModelAndView("front/blocks/products/add");
         modelAndView.addObject("categories",categoriesTree);
+
         return modelAndView;
     }
 
     @RequestMapping(value = "/product/create",method = RequestMethod.POST)
-    public String create(@RequestBody MultiValueMap<String, String> formData){
-        //TODO
+    public String create(@ModelAttribute Product product){
+        //TODO add images, and validation
+        boolean isCreated = productService.createProduct(product);
+        System.out.println("product = " + product);
         //create product
-        Product product = new Product(1,1,1,1);
-        ProductDescription productDescription = new ProductDescription(product,"as","asda",1);
-        //product.addDescription(productDescription);
-        //product.addVariant(new ProductVariantRel(1,1));
-        productRepository.save(product);
-        //productDescriptionRepository.save(productDescription);
-       // productService.createProduct(formData);
-        System.out.println(formData);
-
         return "back";
     }
     @RequestMapping(value = "/product/add/{category_id}")
@@ -72,6 +67,10 @@ public class ProductController {
         //SELECT * FROM `category_feature_rel` WHERE category_id=1 INNER JOIN product_features USING(feature_id)  ev ajln
         ModelAndView modelAndView = new ModelAndView("front/blocks/products/form");
         modelAndView.addObject("featureVariants",featuresByCategory);
+        Product product = new Product();
+        product.addDescription(new ProductDescription());
+        product.addVariant(new ProductVariantRel());
+        modelAndView.addObject("product",product);
         return modelAndView;
     }
 
