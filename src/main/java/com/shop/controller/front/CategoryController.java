@@ -14,12 +14,11 @@ import javax.persistence.criteria.CriteriaQuery;
 @Controller
 @RequestMapping("/")
 public class CategoryController {
-
     @Autowired
     private CategoryService categoryService;
-
     @Autowired
     EntityManager entityManager;
+
     @RequestMapping("/category/{category_id}/{page_num}" )
     public ModelAndView index(@PathVariable(value = "category_id") int category_id
             , @PathVariable(value = "page_num",required = false) int page_num){

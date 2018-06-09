@@ -2,8 +2,9 @@ package com.shop.domain.entity;
 
 import org.hibernate.annotations.Where;
 
-import java.util.List;
 import javax.persistence.*;
+import java.util.List;
+
 @Entity
 @Table(name = "categories")
 public class Category {
@@ -12,10 +13,16 @@ public class Category {
     private int id;
     @Column(name = "parent_id")
     private int parentId;
+    @Column(name = "status")
     private int status;
-    @OneToMany(mappedBy = "category",fetch = FetchType.LAZY)
+    @Column(name = "level")
+    private int level;
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     @Where(clause = "lang_id='0'")
     private List<CategoryDescription> categoryDescriptions;
+
+    public Category() {
+    }
 
     public int getId() {
         return id;
@@ -39,6 +46,14 @@ public class Category {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
     }
 
     public List<CategoryDescription> getCategoryDescriptions() {

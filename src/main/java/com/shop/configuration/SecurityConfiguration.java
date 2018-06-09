@@ -22,10 +22,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private DataSource dataSource;
-	
+
 	@Value("${spring.queries.users-query}")
 	private String usersQuery;
-	
+
 	@Value("${spring.queries.roles-query}")
 	private String rolesQuery;
 
@@ -42,7 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
+
 		http.
 			authorizeRequests()
 				.antMatchers("/**").permitAll()
@@ -59,7 +59,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.logoutSuccessUrl("/").and().exceptionHandling()
 				.accessDeniedPage("/access-denied");
 	}
-	
+
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 	    web

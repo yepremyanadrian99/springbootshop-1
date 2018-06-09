@@ -8,7 +8,6 @@ public class CategoryDescription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    //@Column(name = "category_id")
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
