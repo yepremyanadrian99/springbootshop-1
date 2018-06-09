@@ -8,13 +8,15 @@ public class CategoryDescription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
     private String description;
     @Column(name = "lang_id")
     private int langId;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     public int getId() {
         return id;

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>User Database</title>
+    <title>Add Feature</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 
@@ -10,14 +10,13 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li><a href="../home">Back</a></li>
-            </ul>
+            <li><a href="../home">HOME</a></li>
         </div>
     </div>
 </nav>
 
 <div>
+    <p th:text="${message}"></p>
     Add Category
     <form method="post">
         <p><input type="text" name="name" placeholder="Category name"/></p>

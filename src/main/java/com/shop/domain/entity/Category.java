@@ -17,6 +17,8 @@ public class Category {
     private int status;
     @Column(name = "level")
     private int level;
+    @Column(name = "id_path")
+    private String idPath;
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     @Where(clause = "lang_id='0'")
     private List<CategoryDescription> categoryDescriptions;
@@ -54,6 +56,14 @@ public class Category {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public String getIdPath() {
+        return idPath;
+    }
+
+    public void setIdPath(String idPath) {
+        this.idPath = idPath;
     }
 
     public List<CategoryDescription> getCategoryDescriptions() {

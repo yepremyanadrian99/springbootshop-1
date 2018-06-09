@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <title>Admin Page</title>
+    <title>Admin Home</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}"/>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -34,22 +34,20 @@
         <div class="panel panel-primary">
             <div class="panel-heading">Categories</div>
             <div class="panel-body">
-                <p><a href="categories/add">Add</a></p>
-            </div>
-
-            <div class="panel-heading">Category Descriptions</div>
-            <div class="panel-body">
-                <p><a href="category_descriptions/list">List</a></p>
-            </div>
-
-            <div class="panel-heading">Category Feature Relationships</div>
-            <div class="panel-body">
-                <p><a href="category_feature_rels/list">List</a></p>
+                <p><a href="add/categories.html">Add</a></p>
+                <p><a href="delete/categories.html">Delete</a></p>
             </div>
 
             <div class="panel-heading">Features</div>
             <div class="panel-body">
-                <p><a href="features/list/">List</a></p>
+                <p><a href="add/features.html">Add</a></p>
+                <p><a href="delete/features.html">Delete</a></p>
+            </div>
+
+            <!--
+            <div class="panel-heading">Category Feature Relationships</div>
+            <div class="panel-body">
+                <p><a href="category_feature_rels/list">List</a></p>
             </div>
 
             <div class="panel-heading">Feature Descriptions</div>
@@ -106,6 +104,7 @@
             <div class="panel-body">
                 <p><a href="user_roles/list/">List</a></p>
             </div>
+            -->
         </div>
     </div>
 

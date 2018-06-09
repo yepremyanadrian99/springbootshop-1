@@ -1054,29 +1054,6 @@ INSERT INTO `user` (`user_id`, `active`, `email`, `last_name`, `name`, `password
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `first_name` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `last_name` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(40) NOT NULL,
-  `phone_number` varchar(16) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `phone_number`) VALUES
-(1, 'Arsen', 'Grigoryan', 'arsen-grigoryan@gmail.com', 'd66b3bac5c819c46c63f60fad08716950c97f5e3', '+37477864570'),
-(2, 'Vahe', 'Mkrtchyan', 'vcmkrtchyan@gmail.com', '7e240de74fb1ed08fa08d38063f6a6a91462a815', '+37495914536');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `user_role`
 --
 

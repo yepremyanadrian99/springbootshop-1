@@ -38,8 +38,12 @@ public class CategoryService {
         //jdbcTemplate.
     }
 
-    public void addCategory(Category category) {
-        categoryRepository.save(category);
+    public Category addOrUpdateCategory(Category category) {
+        return categoryRepository.save(category);
+    }
+
+    public void deleteCategory(int categoryId) {
+        categoryRepository.delete(categoryId);
     }
 
     public List<ProductDto> getProducts(int cid, int page, int itemPerPage) {
@@ -97,11 +101,6 @@ public class CategoryService {
         return categoryRepository.findById(categoryId);
     }
 
-    public int getCategoryLevel(int categoryId) {
-        return jdbcTemplate.queryForObject("SELECT c.level " +
-                "from categories as c where c.id=?", int.class, categoryId);
-    }
-
     public ModelAndView loadCategory(int category_id, int page_num) {
         int pages_count = productRepository.countByCategoryId(category_id);
         ;
@@ -115,5 +114,4 @@ public class CategoryService {
 
         return modelAndView;
     }
-
 }
