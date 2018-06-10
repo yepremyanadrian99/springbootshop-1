@@ -17,6 +17,7 @@ public class CategoryDescriptionService {
         return categoryDescriptionRepository.save(categoryDescription);
     }
 
+    @Transactional
     public void deleteCategoryDescriptionByCategoryId(int categoryId) {
         categoryDescriptionRepository.deleteByCategoryId(categoryId);
     }

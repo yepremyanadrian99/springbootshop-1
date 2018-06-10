@@ -4,11 +4,12 @@ import com.shop.domain.dto.CategoryDto;
 import com.shop.domain.dto.FeatureDto;
 import com.shop.domain.dto.ProductDto;
 import com.shop.domain.entity.Category;
+import com.shop.domain.entity.CategoryDescription;
+import com.shop.repository.CategoryDescriptionRepository;
 import com.shop.repository.CategoryRepository;
 import com.shop.repository.ProductRepository;
 import com.shop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,16 +20,17 @@ import java.util.Map;
 
 @Service
 public class CategoryService {
-
     //TODO get from session
     private static final int ITEM_PER_PAGE = 5;
-
     private final JdbcTemplate jdbcTemplate;
     @Autowired
     CategoryRepository categoryRepository;
-
+    @Autowired
+    CategoryDescriptionRepository categoryDescriptionRepository;
     @Autowired
     ProductRepository productRepository;
+    @Autowired
+    CategoryDescriptionService categoryDescriptionService;
 
     //ProductRepository productRepository;
     private UserRepository userRepository;
@@ -40,8 +42,28 @@ public class CategoryService {
         //jdbcTemplate.
     }
 
-    public Category addOrUpdateCategory(Category category) {
-        return categoryRepository.save(category);
+    public Category addOrUpdateCategory(int parentId, int status, String name, String description) {
+        Category category = new Category();
+        category.setParentId(parentId);
+        Category parentCategory = getCategoryById(parentId);
+        category.setStatus(status);
+        category.setLevel((parentCategory == null) ? 0 : parentCategory.getLevel() + 1);
+        category.setIdPath("");
+        category = categoryRepository.save(category);
+
+        String idPath = Integer.toString(category.getId());
+        category.setIdPath(
+                (parentCategory == null) ? idPath : parentCategory.getIdPath().concat("/" + idPath)
+        );
+        categoryRepository.save(category);
+
+        CategoryDescription categoryDescription = new CategoryDescription();
+        categoryDescription.setCategory(category);
+        categoryDescription.setDescription(description);
+        categoryDescription.setName(name);
+        categoryDescriptionService.addCategoryDescription(categoryDescription);
+
+        return category;
     }
 
     public void deleteCategory(int categoryId) {
@@ -85,7 +107,7 @@ public class CategoryService {
 
         List<CategoryDto> categoryDtos = new ArrayList<CategoryDto>();
 
-        getCateory(startingId, categoryDtos,langId);
+        getCategory(startingId, categoryDtos,langId);
 
         return categoryDtos;
     }
@@ -102,7 +124,7 @@ public class CategoryService {
     }
 
     //todo optimize multiple queries
-    public void getCateory(int parentId,List<CategoryDto> categoryDtos,int langId){
+    public void getCategory(int parentId, List<CategoryDto> categoryDtos, int langId){
 
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("select c.id,d.name,d.description from categories c " +
                 "inner join category_descriptions d" +
@@ -114,7 +136,7 @@ public class CategoryService {
         for (CategoryDto categoryDto :categoryDtos){
             categoryDto.setSubcategories(new ArrayList<CategoryDto>());
 
-            getCateory(categoryDto.getId(),categoryDto.getSubcategories(),langId);
+            getCategory(categoryDto.getId(),categoryDto.getSubcategories(),langId);
         }
     }
 
@@ -143,4 +165,6 @@ public class CategoryService {
 
         return modelAndView;
     }
+
+
 }
