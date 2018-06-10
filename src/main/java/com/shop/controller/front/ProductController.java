@@ -9,19 +9,13 @@ import com.shop.domain.entity.ProductVariantRel;
 import com.shop.repository.ProductDescriptionRepository;
 import com.shop.repository.ProductRepository;
 import com.shop.service.CategoryService;
-import com.shop.service.FeatureService;
+import com.shop.service.ProductFeatureService;
 import com.shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
-import javax.websocket.server.PathParam;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +28,7 @@ public class ProductController {
     @Autowired
     ProductService productService;
     @Autowired
-    FeatureService featureService;
+    ProductFeatureService productFeatureService;
     @Autowired
     private ProductDescriptionRepository productDescriptionRepository;
 
@@ -60,7 +54,7 @@ public class ProductController {
     @RequestMapping(value = "/product/add/{category_id}")
     public ModelAndView form(@PathVariable("category_id")int category_id){
 
-        Map<Integer, FeatureDto> featuresByCategory = featureService.getFeaturesByCategory(category_id);
+        Map<Integer, FeatureDto> featuresByCategory = productFeatureService.getFeaturesByCategory(category_id);
         System.out.println(featuresByCategory);
         //TODO
         //get features connected to this category
