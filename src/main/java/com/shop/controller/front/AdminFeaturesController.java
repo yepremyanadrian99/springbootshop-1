@@ -40,24 +40,18 @@ public class AdminFeaturesController {
         feature.setStatus(status);
         feature = featureService.addProductFeature(feature);
 
-        ProductFeatureDescription featureDescription1 = new ProductFeatureDescription();
-        ProductFeatureDescription featureDescription2 = new ProductFeatureDescription();
-        ProductFeatureDescription featureDescription3 = new ProductFeatureDescription();
-        featureDescription1.setProductFeature(feature);
-        featureDescription2.setProductFeature(feature);
-        featureDescription3.setProductFeature(feature);
-        featureDescription1.setName(name1);
-        featureDescription2.setName(name2);
-        featureDescription3.setName(name3);
-        featureDescription1.setDescription(description1);
-        featureDescription2.setDescription(description2);
-        featureDescription3.setDescription(description3);
-        featureDescription1.setLangId(1);
-        featureDescription2.setLangId(2);
-        featureDescription3.setLangId(3);
-        featureDescriptionService.addFeatureDescription(featureDescription1);
-        featureDescriptionService.addFeatureDescription(featureDescription2);
-        featureDescriptionService.addFeatureDescription(featureDescription3);
+        ProductFeatureDescription featureDescription;
+        String[] names = {name1, name2, name3};
+        String[] descriptions = {description1, description2, description3};
+
+        for (int i = 0; i < names.length; ++i) {
+            featureDescription = new ProductFeatureDescription();
+            featureDescription.setProductFeature(feature);
+            featureDescription.setName(names[i]);
+            featureDescription.setDescription(descriptions[i]);
+            featureDescription.setLangId(i + 1);
+            featureDescriptionService.addFeatureDescription(featureDescription);
+        }
 
         return add(String.format("Feature %s successfully saved!", name2));
     }
