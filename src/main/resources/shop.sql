@@ -22,6 +22,11 @@ SET time_zone = "+00:00";
 -- Database: `shop`
 --
 
+DROP DATABASE IF EXISTS shop;
+CREATE DATABASE shop;
+USE shop;
+
+
 -- --------------------------------------------------------
 
 --
@@ -1253,30 +1258,8 @@ INSERT INTO `user` (`user_id`, `active`, `email`, `last_name`, `name`, `password
 (1, 1, 'vigenshakaryan@gmail.com', 'shakaryan', 'vigen ', '$2a$10$J4tdVPxmnAUZbWKnjUKLLeKXZtEYwwZGz7ZtT5xTZYqwyy3t/TCuS'),
 (2, 1, 'vasdas@gmail.com', 'asad', 'sdfsfsd', '$2a$10$h66MZxG4k3HCMHvXCrKOx.3s2NWsSK7RypSqEPhF3S9aESx5YvpOS'),
 (3, 1, 'sdfsdfsdfsd@gmail.com', 'ssdfsdfs', 'sdfsdfsd', '$2a$10$Jw1tOYok3Z29kryTCQuKVuYol1PHBlzajFmEAyfCbGJi3/hynB15K'),
-(4, 1, 'sdfsdfsdf@gmail.com', 'sdfsdfsdf', 'sdfsdfsdf', '$2a$10$YOB00Ay6oYQEEJPOFDpBHeDihhxxqNgTTi5.yzr/1hwLpJuciRZEe');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `first_name` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `last_name` varchar(255) CHARACTER SET utf8 NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(40) NOT NULL,
-  `phone_number` varchar(16) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `phone_number`) VALUES
-(1, 'Arsen', 'Grigoryan', 'arsen-grigoryan@gmail.com', 'd66b3bac5c819c46c63f60fad08716950c97f5e3', '+37477864570'),
-(2, 'Vahe', 'Mkrtchyan', 'vcmkrtchyan@gmail.com', '7e240de74fb1ed08fa08d38063f6a6a91462a815', '+37495914536');
+(4, 1, 'sdfsdfsdf@gmail.com', 'sdfsdfsdf', 'sdfsdfsdf', '$2a$10$YOB00Ay6oYQEEJPOFDpBHeDihhxxqNgTTi5.yzr/1hwLpJuciRZEe'),
+(5, 1, 'yepremyanadrian@mail.ru', 'Yepremyan', 'Adrian', '$2a$10$mcs6kik5RtLjzLM9L.u8AuaOn0LMOMiOWsQIXK3Pn1pAOGHuhMRH2');
 
 -- --------------------------------------------------------
 
@@ -1297,7 +1280,8 @@ INSERT INTO `user_role` (`user_id`, `role_id`) VALUES
 (1, 1),
 (2, 1),
 (3, 2),
-(4, 2);
+(4, 2),
+(5, 1);
 
 --
 -- Indexes for dumped tables
