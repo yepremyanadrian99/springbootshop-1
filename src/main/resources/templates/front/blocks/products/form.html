@@ -4,13 +4,13 @@
 
 </head>
 <body>
-<header th:include="front/common/header :: header">
+<header th:include="front/common/header :: header(${languages})">
 
 </header>
 
 <div layout:fragment="content">
 <!--TODO-->
-    <form th:action="@{/product/create}" th:method="POST" th:object="${product}">
+    <form th:action="@{/product/create}" th:method="POST" th:object="${product}" enctype="multipart/form-data">
         <th:block th:each="feature : ${featureVariants}" >
             <div>
                 <label th:text="${feature.value.name}"></label>
@@ -24,7 +24,10 @@
         <input th:type="text" th:field="*{price}">
         <input th:type="text" th:field="*{productDescription[0].name}">
         <input th:type="text" th:field="*{productDescription[0].description}">
-
+        <input th:type="file" name="files">
+        <input th:type="file" name="files">
+        <input th:type="file" name="files">
+        <input th:type="file" name="files">
         <input th:type="SUBMIT" th:value="Create">
     </form>
 

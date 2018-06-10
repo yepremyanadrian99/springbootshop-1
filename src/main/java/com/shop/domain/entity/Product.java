@@ -1,8 +1,10 @@
 package com.shop.domain.entity;
 
+import org.springframework.data.annotation.Transient;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.*;
 
 @Entity
 @Table(name = "products")
@@ -22,15 +24,16 @@ public class Product {
     private int categoryId;
 
     private int status;
-
-
-
+    @Transient
+    private int top;
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<ProductDescription> productDescriptions;
 
     @OneToMany(mappedBy = "product",fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     private List<ProductVariantRel> productVariantRels;
 
+    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private List<Image> images;
     public Product(){}
     public Product(double price, int userId, int categoryId, int status) {
         this.price = price;
@@ -39,6 +42,21 @@ public class Product {
         this.status = status;
     }
 
+    public int getTop() {
+        return top;
+    }
+
+    public void setTop(int top) {
+        this.top = top;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+    }
 
     public List<ProductDescription> getProductDescriptions() {
         return productDescriptions;

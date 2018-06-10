@@ -9,18 +9,15 @@
 
 </header>
 
-<div layout:fragment="content">
+<div th:fragment="topproducts(products)">
     <div class="section">
         <!-- container -->
         <div class="container">
             <!-- row -->
             <div class="row">
                 <!-- ASIDE -->
-                <th:block th:replace="front/blocks/product_filters :: product_filters(${featuresByCategory})"></th:block>
-                <!-- /ASIDE -->
 
-                <!-- MAIN -->
-                <div id="main" class="col-md-9">
+                <div id="main" class="col-md-9 ssdfsdfsdfsdf" style="float: right">
                     <!-- /store top filter -->
 
                     <!-- STORE -->
@@ -37,11 +34,11 @@
                                                 </div>
                                                 <!--<button class="main-btn quick-view"><i class="fa fa-search-plus"></i> Quick view</button>-->
 
-                                                <img th:src="@{'/images/products/'+${product.url}}" style="max-height: 300px">
+                                                <img th:src="@{'/images/products/'+${product.images[0].url}}" style="max-height: 300px">
                                             </div>
                                             <div class="product-body">
                                                 <h3 class="product-price" th:text="${'$'+product.price}">$32.50 <del class="product-old-price">$45.00</del></h3>
-                                                <h2 class="product-name"><a href="#" th:text="${product.getName()}">Product Name Goes Here</a></h2>
+                                                <h2 class="product-name"><a href="#" th:text="ssdfs">Product Name Goes Here</a></h2>
 
                                             </div>
                                         </a>
@@ -55,21 +52,6 @@
                     </div>
                     <!-- /STORE -->
 
-                    <!-- store bottom filter -->
-                    <div class="store-filter clearfix" th:if="${pages}> 0">
-                        <div class="pull-right">
-
-                            <ul class="store-pages">
-                                <li class="active" th:each="page : ${#numbers.sequence( 1, pages)}" th:with="kw=${#httpServletRequest.getParameter('q')},features=${#httpServletRequest.getParameter('features')}" >
-
-                                    <a th:href="@{'/category/'+${category_id}+'/'+${page}+'?q='+${kw}+'&features='+${features}}" th:text="${page}" th:if="${kw} !=null and ${features} != null "></a>
-                                    <a th:href="@{'/category/'+${category_id}+'/'+${page}+'?features='+${features}}" th:text="${page}" th:if="${kw} ==null and ${features} != null "></a>
-                                    <a th:href="@{'/category/'+${category_id}+'/'+${page}+'?q='+${kw}}" th:text="${page}" th:if="${kw} !=null and ${features} == null "></a>
-                                </li>
-
-                            </ul>
-                        </div>
-                    </div>
                     <!-- /store bottom filter -->
                 </div>
                 <!-- /MAIN -->

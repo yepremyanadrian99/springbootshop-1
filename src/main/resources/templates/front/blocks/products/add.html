@@ -1,10 +1,10 @@
 <html layout:decorate="~{front/home/index}" xmlns:layout="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.w3.org/1999/xhtml">
+      xmlns:th="http://www.thymeleaf.org">
 <head th:include="front/blocks/header :: header">
 
 </head>
 <body>
-<header th:include="front/common/header :: header">
+<header th:include="front/common/header :: header(${languages})">
 
 </header>
 

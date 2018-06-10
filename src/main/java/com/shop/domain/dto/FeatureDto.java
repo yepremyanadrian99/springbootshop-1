@@ -8,13 +8,14 @@ public class FeatureDto {
     private String name;
     private List<VariantDto> variantDtos;
 
-    public FeatureDto(Integer id, String name) {
+    public FeatureDto(Integer id, String name ){
         this.id = id;
         this.name = name;
+
     }
 
-    public void addVariant(VariantDto variantDto) {
-        if (variantDtos == null) {
+    public void addVatiant(VariantDto variantDto){
+        if (variantDtos == null){
             variantDtos = new ArrayList<>();
         }
         variantDtos.add(variantDto);
