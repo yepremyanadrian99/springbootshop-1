@@ -57,6 +57,24 @@ public class ProductFeatureService {
         return featureDtoMap;
     }
 
+    public List<FeatureDto> getAllFeatures() {
+        List<Map<String, Object>> maps = jdbcTemplate.queryForList(
+                "SELECT pf.id,pfd.name from product_features as pf " +
+                        "INNER JOIN product_features_descriptions as pfd " +
+                        "ON (pf.id=pfd.feature_id)"
+        );
+
+        List<FeatureDto> featureDtos = new ArrayList<>();
+        Integer featureId;
+        String featureName;
+
+        for (Map<String, Object> map : maps) {
+            featureId = (Integer) map.get("id");
+            featureName = (String) map.get("name");
+            featureDtos.add(new FeatureDto(featureId, featureName));
+        }
+        return featureDtos;
+    }
 
     public String decodeFeatureHash(String hash){
         if (hash.length() ==0 ) return "";
