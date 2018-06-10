@@ -10,6 +10,10 @@ public class ProductVariantRel {
     private int id;
     @Column(name = "product_id",insertable = false,updatable = false)
     private int productId;
+
+    @Column(name = "feature_id")
+    private int featureId;
+
     @Column(name = "variant_id")
     private int variantId;
     @ManyToOne(cascade = CascadeType.ALL)
@@ -19,6 +23,14 @@ public class ProductVariantRel {
     public ProductVariantRel(int productId, int variantId) {
         this.productId = productId;
         this.variantId = variantId;
+    }
+
+    public int getFeatureId() {
+        return featureId;
+    }
+
+    public void setFeatureId(int featureId) {
+        this.featureId = featureId;
     }
 
     public int getId() {

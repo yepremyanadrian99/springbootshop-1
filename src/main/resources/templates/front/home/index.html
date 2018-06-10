@@ -5,7 +5,7 @@
 
 </head>
 <body>
-<header th:include="front/common/header :: header(${languages})">
+<header th:include="front/common/header :: header(${languages},${subcategories})">
 
 </header>
 <th:block th:replace="front/common/navigation :: navigation(${categoriesTree})"></th:block>

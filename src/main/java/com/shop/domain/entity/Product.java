@@ -3,6 +3,8 @@ package com.shop.domain.entity;
 import org.springframework.data.annotation.Transient;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    @NotNull
     private double price;
     //TODO connect to Entity
     @Column(name = "user_id")
@@ -34,6 +36,8 @@ public class Product {
 
     @OneToMany(mappedBy = "product",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Image> images;
+
+
     public Product(){}
     public Product(double price, int userId, int categoryId, int status) {
         this.price = price;

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -107,7 +108,7 @@ public class CategoryService {
 
         List<CategoryDto> categoryDtos = new ArrayList<CategoryDto>();
 
-        getCategory(startingId, categoryDtos,langId);
+        getCateory(startingId, categoryDtos,langId);
 
         return categoryDtos;
     }
@@ -124,7 +125,7 @@ public class CategoryService {
     }
 
     //todo optimize multiple queries
-    public void getCategory(int parentId, List<CategoryDto> categoryDtos, int langId){
+    public void getCateory(int parentId,List<CategoryDto> categoryDtos,int langId){
 
         List<Map<String, Object>> maps = jdbcTemplate.queryForList("select c.id,d.name,d.description from categories c " +
                 "inner join category_descriptions d" +
@@ -136,7 +137,7 @@ public class CategoryService {
         for (CategoryDto categoryDto :categoryDtos){
             categoryDto.setSubcategories(new ArrayList<CategoryDto>());
 
-            getCategory(categoryDto.getId(),categoryDto.getSubcategories(),langId);
+            getCateory(categoryDto.getId(),categoryDto.getSubcategories(),langId);
         }
     }
 
@@ -145,7 +146,7 @@ public class CategoryService {
     }
 
     public ModelAndView loadCategory(int category_id,int page_num,String features,int langId,String keyword){
-
+        String[] featuresArray = features.split(",");
         //get available features for filtering
         Map<Integer, FeatureDto> featuresByCategory = featureService.getFeaturesByCategory(category_id,langId);
 
@@ -162,9 +163,22 @@ public class CategoryService {
         modelAndView.addObject("products",products);
         modelAndView.addObject("pages",pages_count);
         modelAndView.addObject("featuresByCategory",featuresByCategory);
+        modelAndView.addObject("featuresArray",Arrays.asList(featuresArray));
+        modelAndView.addObject("subcategories",getSubcategories(0,langId));
 
         return modelAndView;
     }
 
-
+    public List<CategoryDto> getSubcategories(int parentId,int langId){
+        List<Map<String, Object>> maps = jdbcTemplate.queryForList("SELECT c.id,cd.name FROM `categories` c INNER JOIN category_descriptions cd " +
+                "ON (c.id = cd.category_id) WHERE c.parent_id=? AND cd.lang_id=?", parentId, langId);
+        List<CategoryDto> list = new ArrayList<>();
+        for (Map<String, Object> map : maps) {
+            list.add(new CategoryDto(
+                    (int)map.get("id"),
+                    (String) map.get("name")
+            ));
+        }
+        return list;
+    }
 }

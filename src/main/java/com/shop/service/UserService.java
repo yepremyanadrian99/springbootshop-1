@@ -11,14 +11,14 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.HashSet;
 
-@Service("userService")
+@Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
-    //@Autowired
+    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     //@Override

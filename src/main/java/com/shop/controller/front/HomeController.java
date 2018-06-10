@@ -40,7 +40,7 @@ public class HomeController {
 
         modelAndView.addObject("languages",languageService.getAll());
         modelAndView.addObject("products",productService.getTopProducts());
-
+        modelAndView.addObject("subcategories",categoryService.getSubcategories(0,language.getId()));
         System.out.println("language = " + language);
         modelAndView.addObject("language",language);
 

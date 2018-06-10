@@ -4,26 +4,30 @@
 
 </head>
 <body>
-<header th:include="front/common/header :: header(${languages})">
+<header th:include="front/common/header :: header(${languages},${subcategories})">
 
 </header>
 
 <div layout:fragment="content">
 <!--TODO-->
-    <form th:action="@{/product/create}" th:method="POST" th:object="${product}" enctype="multipart/form-data">
+    <form th:action="@{/product/create}" th:method="POST" th:object="${product}" enctype="multipart/form-data" style="max-width: 500px;margin: 0 auto">
         <th:block th:each="feature : ${featureVariants}" >
             <div>
                 <label th:text="${feature.value.name}"></label>
+                <input th:type="hidden" th:name="'productVariantRels['+(${feature.key}-1)+'].featureId'" th:value="${feature.value.id}">
                 <select th:name="'productVariantRels['+(${feature.key}-1)+'].variantId'">
-                    <option th:value="NULL" th:text="Select"></option>
+                    <option th:value="0" th:text="Select"></option>
                     <option th:each="option : ${feature.value.variantDtos}" th:text="${option.name}" th:value="${option.id}"></option>
                 </select>
             </div>
         </th:block>
         <input th:value="${category_id}" type="hidden" id="categoryId" name="categoryId">
-        <input th:type="text" th:field="*{price}">
-        <input th:type="text" th:field="*{productDescription[0].name}">
-        <input th:type="text" th:field="*{productDescription[0].description}">
+        <label>Price</label>
+        <input th:type="text" th:field="*{price}"><br>
+        <label>Name</label>
+        <input th:type="text" th:field="*{productDescription[0].name}"><br>
+        <label>descripton</label>
+        <input th:type="text" th:field="*{productDescription[0].description}"><br>
         <input th:type="file" name="files">
         <input th:type="file" name="files">
         <input th:type="file" name="files">

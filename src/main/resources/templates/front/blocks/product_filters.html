@@ -1,7 +1,7 @@
 <html xmlns:layout="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <body>
-<div class="col-md-3" id="aside" th:fragment="product_filters(filters)">
+<div class="col-md-3" id="aside" th:fragment="product_filters(filters,featuresArray)">
     <form th:with="features=${#httpServletRequest.getParameter('features')}">
         <th:block th:each="filter :${filters}">
             <!-- aside widget -->
@@ -10,7 +10,7 @@
                 <ul class="list-links">
                     <li th:each="variant : ${filter.value.variantDtos}">
                         <label th:text="${variant.name}"></label>
-                        <input class="product_variant" type="checkbox" th:value="${variant.id}"/>
+                        <input class="product_variant" type="checkbox" th:value="${variant.id}" th:checked="${#lists.contains(featuresArray,variant.id+'')}"/>
                     </li>
                 </ul>
             </div>
