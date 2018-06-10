@@ -63,4 +63,19 @@ public class AdminFeaturesController {
 
         return add(String.format("Feature %s successfully saved!", name2));
     }
+
+    @GetMapping("/admin/delete/features")
+    public ModelAndView delete(@RequestParam(required = false, name = "message") String message) {
+        ModelAndView modelAndView = new ModelAndView("/admin/delete/features");
+        modelAndView.addObject("message", message);
+//        modelAndView.addObject("features", featureService.getFeaturesByCategory(0));
+        return modelAndView;
+    }
+
+    @PostMapping("/admin/delete/features")
+    public ModelAndView delete(@RequestParam @NotNull int featureId) {
+        featureDescriptionService.deleteFeatureDescriptionByFeatureId(featureId);
+        featureService.deleteByFeatureId(featureId);
+        return delete(String.format("Feature %d successfully deleted!", featureId));
+    }
 }

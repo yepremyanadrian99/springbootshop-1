@@ -56,4 +56,8 @@ public class ProductFeatureService {
     public ProductFeature addProductFeature(ProductFeature productFeature) {
         return productFeatureRepository.save(productFeature);
     }
+
+    public void deleteByFeatureId(int featureId) {
+        productFeatureRepository.delete(featureId);
+    }
 }
