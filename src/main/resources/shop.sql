@@ -1299,7 +1299,7 @@ INSERT INTO `user` (`user_id`, `active`, `email`, `last_name`, `name`, `password
 --
 
 CREATE TABLE `user_role` (
-  `id`      int     NOT NULL AUTO_INCREMENT,
+  `id`      int     NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL
 )
@@ -1416,24 +1416,6 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- Indexes for table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `email` (`email`);
-
---
--- Indexes for table `user_role`
---
-ALTER TABLE `user_role`
-  ADD PRIMARY KEY (`user_id`, `role_id`),
-  ADD KEY `FKa68196081fvovjhkek5m97n3y` (`role_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
@@ -1531,16 +1513,6 @@ ALTER TABLE `user`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,
   AUTO_INCREMENT = 5;
 
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,
-  AUTO_INCREMENT = 3;
-
---
--- Constraints for dumped tables
---
 
 --
 -- Constraints for table `feature_variants`
