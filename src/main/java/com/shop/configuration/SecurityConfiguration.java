@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(AuthenticationManagerBuilder auth)
 			throws Exception {
 		auth.
-			jdbcAuthentication()
+				jdbcAuthentication()
 				.usersByUsernameQuery(usersQuery)
 				.authoritiesByUsernameQuery(rolesQuery)
 				.dataSource(dataSource)
@@ -45,17 +45,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.
-			authorizeRequests()
+				authorizeRequests()
 				.antMatchers("/**").permitAll()
 				.antMatchers("/login").permitAll()
 				.antMatchers("/registration").permitAll()
-				.antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
-				.authenticated().and().csrf().disable().formLogin()
-				.loginPage("/login").failureUrl("/login?error=true")
+				.antMatchers("/admin/**").hasAuthority("ADMIN")
+				.antMatchers("/user/**").hasAuthority("CLIENT")
+				.antMatchers("/profile/**").hasAuthority("CLIENT")
+				.antMatchers("/product/**").hasAuthority("CLIENT")
+				.antMatchers("/userinfo/**").hasAuthority("CLIENT")
+				.anyRequest().authenticated()
+				.and()
+				.csrf().disable()
+				.formLogin()
+				.loginPage("/login")
+				.failureUrl("/login?error=true")
 				.defaultSuccessUrl("/product/add")
 				.usernameParameter("email")
 				.passwordParameter("password")
-				.and().logout()
+				.and()
+				.logout()
 				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 				.logoutSuccessUrl("/").and().exceptionHandling()
 				.accessDeniedPage("/access-denied");
@@ -63,9 +72,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-	    web
-	       .ignoring()
-	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+		web
+				.ignoring()
+				.antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
 	}
 
 }

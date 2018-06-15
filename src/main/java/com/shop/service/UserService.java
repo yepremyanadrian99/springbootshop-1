@@ -70,4 +70,14 @@ public class UserService {
     public void deleteUserById(int userId) {
         userRepository.deleteUserById(userId);
     }
+
+    public void updatePassword(User user) {
+        String password = (bCryptPasswordEncoder.encode(user.getPassword()));
+        jdbcTemplate.update("UPDATE user SET password = ? WHERE user_id = ?", password, user.getId());
+    }
+
+    public void updateUser(User user) {
+        jdbcTemplate.update("UPDATE user SET name = ?, last_name = ? WHERE user_id = ?\n"
+                ,user.getName(),user.getLastName(), user.getId());
+    }
 }
