@@ -1,0 +1,57 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+
+<head th:include="front/blocks/header :: header">
+
+</head>
+<body>
+<header th:include="front/common/header :: header(${languages},${subcategories})">
+
+</header>
+<div class="container">
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>image</td>
+                    <td>name</td>
+                    <td>price</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <td style="width: 100px">
+                    <img style="width: 100px" th:src="@{'/images/products/'+${product.images[0].url}}" th:if="${product.images.size()} > 0">
+                    <img style="width: 100px" th:src="@{'/images/products/noimage.jpg'}" th:if="${product.images.size()} == 0">
+                </td>
+                <td>
+                    <span th:text="${product.productDescription[0].name}" th:if="${product.productDescription.size()} > 0"></span>
+                </td>
+                <td>
+                    <span th:text="${product.price}"></span>
+                </td>
+                <td>
+                    <a th:href="@{'/product/view/'+${product.id}}">view</a>
+                </td>
+                <td>
+                    <a th:href="@{'/product/delete/'+${product.id}}">delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<th:block th:replace="front/common/footer :: footer"></th:block>
+<!-- jQuery Plugins -->
+<script th:src="@{http://localhost:8080/eshop/js/jquery.min.js}"></script>
+<script th:src="@{http://localhost:8080/eshop/js/bootstrap.min.js}"></script>
+<script th:src="@{http://localhost:8080/eshop/js/slick.min.js}"></script>
+<script th:src="@{http://localhost:8080/eshop/js/nouislider.min.js}"></script>
+<script th:src="@{http://localhost:8080/eshop/js/jquery.zoom.min.js}"></script>
+<script th:src="@{http://localhost:8080/eshop/js/main.js}"></script>
+</body>
+
+</html>

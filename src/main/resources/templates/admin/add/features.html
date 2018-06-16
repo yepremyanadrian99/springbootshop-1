@@ -17,26 +17,27 @@
 
 <div>
     <p th:text="${message}"></p>
-    Add Category
+    Add Feature
     <form method="post">
-        <p><input type="text" name="name" placeholder="Category name"/></p>
-        <p><input type="number" name="parentId" placeholder="Category parent id"/></p>
-        <p><input type="text" name="description" placeholder="Category description"/></p>
-        <p><input type="number" name="langId" placeholder="Language id"/></p>
+        <p><input type="text" name="name1" placeholder="Name: language 1"/></p>
+        <p><input type="text" name="name2" placeholder="Name: language 2"/></p>
+        <p><input type="text" name="name3" placeholder="Name: language 3"/></p>
+        <p><input type="text" name="description1" placeholder="Category: language 1"/></p>
+        <p><input type="text" name="description2" placeholder="Category: language 2"/></p>
+        <p><input type="text" name="description3" placeholder="Category: language 3"/></p>
         <p><input type="number" name="status" placeholder="Status"/></p>
-        <p><input type="number" name="position" placeholder="Position"/></p>
         <p><input type="submit"/></p>
     </form>
 </div>
 
 <div>
-    <p>List of Categories</p>
+    <p>List of Features</p>
     <p>Id | Name</p>
 </div>
 
-<div th:each="category : ${categories}">
-    <span th:text="${category.getId()}"></span>
-    <span th:text="${category.getName()}"></span>
+<div th:each="feature: ${features}">
+    <span th:utext="${feature.getId()}"></span>
+    <span th:utext="${feature.getName()}"></span>
 </div>
 
 </body>

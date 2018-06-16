@@ -1,5 +1,7 @@
 package com.shop.domain.entity;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
+
 @Entity
 @Table(name = "product_descriptions")
 public class ProductDescription {
@@ -8,8 +10,11 @@ public class ProductDescription {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id",referencedColumnName = "id",nullable = false)
+
     private Product product;
+    @Size(min = 5,max = 255)
     private String name;
+    @Size(min = 5,max = 255)
     private String description;
     @Column(name = "lang_id")
     private int langId;

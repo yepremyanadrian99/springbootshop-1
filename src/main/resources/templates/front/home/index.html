@@ -5,11 +5,13 @@
 
 </head>
 <body>
-<header th:include="front/common/header :: header">
+<header th:include="front/common/header :: header(${languages},${subcategories})">
 
 </header>
 <th:block th:replace="front/common/navigation :: navigation(${categoriesTree})"></th:block>
-<div layout:fragment="content"></div>
+<div layout:fragment="content">
+    <th:block th:include="front/blocks/products/top :: topproducts(${products})"></th:block>
+</div>
 
 <div th:with="url=${@environment.getProperty('app.siteurl')}"></div>
 
