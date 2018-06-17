@@ -31,10 +31,8 @@ public class ProductController {
     ProductService productService;
     @Autowired
     ProductFeatureService featureService;
-    @Autowired
-    private ProductDescriptionRepository productDescriptionRepository;
-    @Autowired
-    LanguageService languageService;
+
+
     @Autowired
     Language language;
 
@@ -43,23 +41,18 @@ public class ProductController {
     @RequestMapping(value = "/product/add",method = RequestMethod.GET)
     public ModelAndView add(){
 
-
-        langInit();
         List<CategoryDto> categoriesTree = categoryService.getCategoriesTree(0,language.getId());
 
         ModelAndView modelAndView = new ModelAndView("front/blocks/products/add");
         modelAndView.addObject("categories",categoriesTree);
-        modelAndView.addObject("language",language);
-        modelAndView.addObject("languages",languageService.getAll());
+
         return modelAndView;
     }
 
     @RequestMapping(value = "/product/create",method = RequestMethod.POST)
     public String create(@Valid Product product, @RequestParam(name = "files")MultipartFile[] multipartFiles, BindingResult bindingResult){
         //TODO add images, and validation
-        if (bindingResult.hasErrors()){
-            System.out.println("bindingResult = " + bindingResult.getAllErrors());
-        }
+   
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         if (user != null){
@@ -74,28 +67,24 @@ public class ProductController {
     @RequestMapping(value = "/product/view/{id}")
     public ModelAndView preview(@PathVariable("id") int id){
 
-        langInit();
-
         ModelAndView modelAndView = new ModelAndView("front/blocks/products/preview");
         Product product = productService.getById(id);
         List<ProductVatiantDto> productFeatures = productService.getProductFeatures(id, language.getId());
         User productOwner = productService.getProductOwner(product.getUserId());
         modelAndView.addObject("product",product);
-        modelAndView.addObject("language",language);
+
         modelAndView.addObject("productFeatures",productFeatures);
-        modelAndView.addObject("languages",languageService.getAll());
+
         modelAndView.addObject("productOwner",productOwner);
         modelAndView.addObject("subcategories",categoryService.getSubcategories(0,language.getId()));
         return modelAndView;
     }
     @RequestMapping(value = "/product/add/{category_id}")
     public ModelAndView form(@PathVariable("category_id")int category_id){
-        langInit();
+
         Map<Integer, FeatureDto> featuresByCategory = featureService.getFeaturesByCategory(category_id,language.getId());
         System.out.println(featuresByCategory);
         //TODO
-        //get features connected to this category
-        //SELECT * FROM `category_feature_rel` WHERE category_id=1 INNER JOIN product_features USING(feature_id)  ev ajln
         ModelAndView modelAndView = new ModelAndView("front/blocks/products/form");
         modelAndView.addObject("featureVariants",featuresByCategory);
         Product product = new Product();
@@ -103,20 +92,18 @@ public class ProductController {
         product.addVariant(new ProductVariantRel());
 
         modelAndView.addObject("product",product);
-        modelAndView.addObject("language",language);
-        modelAndView.addObject("languages",languageService.getAll());
+
 
         return modelAndView;
     }
 
     @RequestMapping(value = "/product/search")
     public ModelAndView search(@RequestParam(value = "q",required = false,defaultValue ="") String keyword){
-        langInit();
+
         List<ProductDto> list = productService.searchProducts(keyword, 1, 12);
         ModelAndView modelAndView = new ModelAndView("front/blocks/products/search");
         modelAndView.addObject("products",list);
-        modelAndView.addObject("language",language);
-        modelAndView.addObject("languages",languageService.getAll());
+
         return modelAndView;
     }
 
@@ -126,13 +113,8 @@ public class ProductController {
         ModelAndView modelAndView = new ModelAndView("front/blocks/products/userProducts");
         modelAndView.addObject("owner",productService.getProductOwner(id));
         modelAndView.addObject("products",productService.getUserProducts(id));
-        modelAndView.addObject("language",language);
-        modelAndView.addObject("languages",languageService.getAll());
+
         return modelAndView;
     }
-    public void langInit(){
-        if (language.getId() == 0){
-            languageService.initCurrentLang(language,1);
-        }
-    }
+
 }

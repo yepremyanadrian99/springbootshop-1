@@ -36,10 +36,10 @@ public class ProfileController {
         ModelAndView modelAndView = new ModelAndView("front/profile/index");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
-        if (user == null){
-            modelAndView.setViewName("redirect:/login");
-            return modelAndView;
-        }
+//        if (user == null){
+//            modelAndView.setViewName("redirect:/login");
+//            return modelAndView;
+//        }
         modelAndView.addObject("products",productService.getUserProducts(user.getId()));
 
 

@@ -36,6 +36,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		auth.
 				jdbcAuthentication()
 				.usersByUsernameQuery(usersQuery)
+
 				.authoritiesByUsernameQuery(rolesQuery)
 				.dataSource(dataSource)
 				.passwordEncoder(bCryptPasswordEncoder);
@@ -45,22 +46,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.
+
 				authorizeRequests()
-				.antMatchers("/**").permitAll()
+				.antMatchers("/").permitAll()
 				.antMatchers("/login").permitAll()
+				.antMatchers("/change-to/**").permitAll()
+				.antMatchers("/category/**").permitAll()
+				.antMatchers("/user/*/products").permitAll()
 				.antMatchers("/registration").permitAll()
 				.antMatchers("/admin/**").hasAuthority("ADMIN")
-				.antMatchers("/user/**").hasAuthority("CLIENT")
-				.antMatchers("/profile/**").hasAuthority("CLIENT")
-				.antMatchers("/product/**").hasAuthority("CLIENT")
-				.antMatchers("/userinfo/**").hasAuthority("CLIENT")
-				.anyRequest().authenticated()
-				.and()
-				.csrf().disable()
-				.formLogin()
-				.loginPage("/login")
-				.failureUrl("/login?error=true")
-				.defaultSuccessUrl("/product/add")
+//
+				.antMatchers("/user/**").hasAnyAuthority("CLIENT","ADMIN")
+				.antMatchers("/profile/**").hasAnyAuthority("CLIENT","ADMIN")
+				.antMatchers("/product/add/**").hasAnyAuthority("CLIENT","ADMIN")
+				.antMatchers("/product/view/**").permitAll()
+				.antMatchers("/userinfo/**").hasAnyAuthority("CLIENT","ADMIN").anyRequest()
+				.authenticated().and().csrf().disable().formLogin()
+				.loginPage("/login").failureUrl("/login?error=true")
+				.defaultSuccessUrl("/profile")
 				.usernameParameter("email")
 				.passwordParameter("password")
 				.and()
@@ -74,7 +77,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 		web
 				.ignoring()
-				.antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+				.antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**","/eshop/**");
 	}
 
 }

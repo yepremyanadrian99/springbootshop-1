@@ -30,8 +30,6 @@ public class CategoryController {
     ProductFeatureService featureService;
 
     @Autowired
-    LanguageService languageService;
-    @Autowired
     Language language;
     @RequestMapping("/category/{category_id}/{page_num}" )
     public ModelAndView index(@PathVariable(value = "category_id") int category_id
@@ -39,10 +37,10 @@ public class CategoryController {
             , @RequestParam(value = "features",required = false,defaultValue = "") String features
             ,@RequestParam(value = "q",required = false,defaultValue = "") String keyword
     ){
-        initLang();
+
         ModelAndView modelAndView = categoryService.loadCategory(category_id, page_num,features,language.getId(),keyword);
-        modelAndView.addObject("language",language);
-        modelAndView.addObject("languages",languageService.getAll());
+
+
         return modelAndView;
     }
 
@@ -51,20 +49,13 @@ public class CategoryController {
             , @RequestParam(value = "features",required = false,defaultValue = "") String features
             ,@RequestParam(value = "q",required = false,defaultValue = "") String keyword
     ){
-        initLang();
+
         Map<Integer, FeatureDto> featuresByCategory = featureService.getFeaturesByCategory(category_id,language.getId());
 
         ModelAndView modelAndView = categoryService.loadCategory(category_id, 1,features,language.getId(),keyword);
 
-        modelAndView.addObject("language",language);
-        modelAndView.addObject("languages",languageService.getAll());
         return modelAndView;
     }
 
 
-    public void initLang(){
-        if (language.getId() == 0){
-            languageService.initCurrentLang(language,1);
-        }
-    }
 }

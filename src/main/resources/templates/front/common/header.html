@@ -36,6 +36,7 @@
 
                     <div sec:authorize="isAnonymous()">
                         <a th:href="@{/login}">Login</a>
+                        <a th:href="@{/registration}">Registration</a>
                     </div>
                     </li>
                     <li sec:authorize="isAuthenticated()" class="dropdown default-dropdown">
@@ -57,10 +58,11 @@
 
                 <!-- Search -->
                 <div class="header-search">
-                    <form action="/category/1" method="get" id="search_form">
+                    <form th:action="@{'/category/'+${category_id}}"  method="get" id="search_form">
                         <input class="input search-input" type="text" name="q" placeholder="Enter your keyword">
                         <select class="input search-categories">
-                            <option th:value="${cat.id}" th:each="cat :${subcategories}" th:text="${cat.name}">Category 01</option>
+                            <option th:value="${cat.id}" th:each="cat :${subcategories}" th:text="${cat.name}" th:if="${cat.id}==${category_id}" selected="selected">Category 01</option>
+                            <option th:value="${cat.id}" th:each="cat :${subcategories}" th:text="${cat.name}" th:if="${cat.id}!=${category_id}">Category 01</option>
                         </select>
                         <button class="search-btn"><i class="fa fa-search"></i></button>
                     </form>

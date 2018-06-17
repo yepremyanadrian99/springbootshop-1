@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller
 public class LoginController {
@@ -20,16 +21,25 @@ public class LoginController {
     private UserService userService;
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
-    public ModelAndView login() {
+    public ModelAndView login(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
+        if (principal !=null){
+            modelAndView.setViewName("redirect:/");
+            return modelAndView;
+        }
         modelAndView.setViewName("login");
         return modelAndView;
     }
 
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public ModelAndView registration() {
+    public ModelAndView registration(Principal principal) {
         ModelAndView modelAndView = new ModelAndView();
+       if (principal !=null){
+           modelAndView.setViewName("redirect:/");
+           return modelAndView;
+       }
+
         User user = new User();
         modelAndView.addObject("user", user);
         modelAndView.setViewName("registration");
@@ -58,10 +68,11 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
-    public ModelAndView home() {
+    public ModelAndView home(Principal principal) {
+        System.out.println("principal = " + principal);
         ModelAndView modelAndView = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
+
+        User user = userService.findUserByEmail(principal.getName());
         modelAndView.addObject("userName", user.getName() + " " + user.getLastName());
         modelAndView.setViewName("admin/home");
         return modelAndView;

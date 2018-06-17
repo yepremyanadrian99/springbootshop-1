@@ -12,26 +12,46 @@
 <!--TODO-->
     <form th:action="@{/product/create}" th:method="POST" th:object="${product}" enctype="multipart/form-data" style="max-width: 500px;margin: 0 auto">
         <th:block th:each="feature : ${featureVariants}" >
-            <div>
+            <div class="form-group">
                 <label th:text="${feature.value.name}"></label>
                 <input th:type="hidden" th:name="'productVariantRels['+(${feature.key}-1)+'].featureId'" th:value="${feature.value.id}">
-                <select th:name="'productVariantRels['+(${feature.key}-1)+'].variantId'">
+                <select class="form-control" th:name="'productVariantRels['+(${feature.key}-1)+'].variantId'">
                     <option th:value="0" th:text="Select"></option>
                     <option th:each="option : ${feature.value.variantDtos}" th:text="${option.name}" th:value="${option.id}"></option>
                 </select>
             </div>
         </th:block>
+
         <input th:value="${category_id}" type="hidden" id="categoryId" name="categoryId">
-        <label>Price</label>
-        <input th:type="text" th:field="*{price}"><br>
-        <label>Name</label>
-        <input th:type="text" th:field="*{productDescription[0].name}"><br>
-        <label>descripton</label>
-        <input th:type="text" th:field="*{productDescription[0].description}"><br>
-        <input th:type="file" name="files">
-        <input th:type="file" name="files">
-        <input th:type="file" name="files">
-        <input th:type="file" name="files">
+        <div class="form-group">
+            <label>Price</label>
+
+            <input class="form-control" th:type="text" th:field="*{price}"><br>
+        </div>
+        <div class="form-group">
+            <label>Name</label>
+            <input class="form-control" th:type="text" th:field="*{productDescription[0].name}"><br>
+        </div>
+        <div class="form-group">
+            <label>descripton</label>
+
+            <input class="form-control" th:type="text" th:field="*{productDescription[0].description}"><br>
+        </div>
+        <div class="form-group">
+            <input class="form-control" th:type="file" name="files">
+        </div>
+        <div class="form-group">
+            <input class="form-control" th:type="file" name="files">
+        </div>
+        <div class="form-group">
+            <input class="form-control" th:type="file" name="files">
+        </div>
+        <div class="form-group">
+            <input class="form-control" th:type="file" name="files">
+        </div>
+        <div class="form-group">
+            <input class="form-control" th:type="file" name="files">
+        </div>
         <input th:type="SUBMIT" th:value="Create">
     </form>
 

@@ -20,29 +20,19 @@ public class HomeController {
     CategoryService categoryService;
 
     @Autowired
-    LanguageService languageService;
-    @Autowired
     private Language language;
     @Autowired
     ProductService productService;
     @RequestMapping(value = "/",method = RequestMethod.GET)
     public ModelAndView view(){
-        if (language.getId() == 0){
-            languageService.initCurrentLang(language,1);
-        }
-        String property = System.getProperty("user.dir");
-        System.out.println("property = " + property);
-        System.out.println("language.getCurrentId( = " + language.getCurrentId());
+
         List<CategoryDto> categoriesTree = categoryService.getCategoriesTree(0,language.getId());
 
         ModelAndView modelAndView = new ModelAndView("front/home/index");
         modelAndView.addObject("categoriesTree",categoriesTree);
 
-        modelAndView.addObject("languages",languageService.getAll());
         modelAndView.addObject("products",productService.getTopProducts());
         modelAndView.addObject("subcategories",categoryService.getSubcategories(0,language.getId()));
-        System.out.println("language = " + language);
-        modelAndView.addObject("language",language);
 
         return  modelAndView;
     }
