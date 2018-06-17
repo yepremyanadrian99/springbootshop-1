@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Delete User</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div id="navbar" class="collapse navbar-collapse">
+            <li><a href="../home">HOME</a></li>
+        </div>
+    </div>
+</nav>
+
+<div>
+    <p th:text="${message}"></p>
+    Delete User
+    <form method="post">
+        <p><input type="number" name="userId" placeholder="User id"/></p>
+        <p><input type="submit"/></p>
+    </form>
+</div>
+
+<div>
+    <p>List of Users</p>
+    <p>Id | Role | Name | Last Name | Email</p>
+</div>
+
+<div th:each="user : ${users}">
+    <span th:text="${user.getId()}"></span>
+    <span th:text="${user.getRole()}"></span>
+    <span th:text="${user.getName()}"></span>
+    <span th:text="${user.getLastName()}"></span>
+    <span th:text="${user.getEmail()}"></span>
+</div>
+
+</body>
+
+</html>

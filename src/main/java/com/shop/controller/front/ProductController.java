@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 import java.util.Map;
@@ -53,8 +55,11 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/product/create",method = RequestMethod.POST)
-    public String create(@ModelAttribute Product product, @RequestParam(name = "files")MultipartFile[] multipartFiles){
+    public String create(@Valid Product product, @RequestParam(name = "files")MultipartFile[] multipartFiles, BindingResult bindingResult){
         //TODO add images, and validation
+        if (bindingResult.hasErrors()){
+            System.out.println("bindingResult = " + bindingResult.getAllErrors());
+        }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName());
         if (user != null){

@@ -1,6 +1,6 @@
 package com.shop.domain.entity;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -18,7 +18,9 @@ public class Language {
     private String code;
 
     private String name;
-    @Ignore
+
+    @Transient
+
     private int currentId;
 
     public int getCurrentId() {

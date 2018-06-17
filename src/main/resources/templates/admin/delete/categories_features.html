@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Delete Category</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        .container {
+            width: 100%;
+            float: left;
+        }
+
+        .parent {
+            width: 33%;
+            float: left
+        }
+
+        .child {
+            width: 100%;
+            float: left;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div id="navbar" class="collapse navbar-collapse">
+            <li><a href="../home">HOME</a></li>
+        </div>
+    </div>
+</nav>
+
+<div>
+    <p th:text="${message}"></p>
+    Delete Category
+    <form method="post">
+        <p><input type="number" name="categoryFeatureRelId" placeholder="Category Feature Rel id"/></p>
+        <p><input type="submit"/></p>
+    </form>
+</div>
+
+<div class="container">
+    <div class="parent">
+        <p>List of Categories</p>
+        <div class="child" th:each="category : ${categories}">
+            <span th:text="${category.getId()}"></span>.
+            <span th:text="${category.getName()}"></span>
+        </div>
+    </div>
+    <div class="parent">
+        <p>List of Categories</p>
+        <div class="child" th:each="feature : ${features}">
+            <span th:text="${feature.getId()}"></span>.
+            <span th:text="${feature.getName()}"></span>
+        </div>
+    </div>
+    <div class="parent">
+        <p>List of Rels</p>
+        <div class="child" th:each="categoryFeatureRel : ${categoryFeatureRels}">
+            <span th:text="${categoryFeatureRel.getId()}"></span>.
+            Feature: <span th:text="${categoryFeatureRel.getFeatureId()}"></span>
+            => Category: <span th:text="${categoryFeatureRel.getCategoryId()}"></span>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

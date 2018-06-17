@@ -148,6 +148,7 @@ public class CategoryService {
     public ModelAndView loadCategory(int category_id,int page_num,String features,int langId,String keyword){
         String[] featuresArray = features.split(",");
         //get available features for filtering
+
         Map<Integer, FeatureDto> featuresByCategory = featureService.getFeaturesByCategory(category_id,langId);
 
         //get product ids by variant id

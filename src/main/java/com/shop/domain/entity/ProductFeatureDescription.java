@@ -14,7 +14,9 @@ public class ProductFeatureDescription {
     private ProductFeature productFeature;
     @Column(name = "name")
     private String name;
-    @Column(name = "full_description")
+
+    @Column(name = "full_description", columnDefinition = "mediumtext")
+
     private String description;
     @Column(name = "lang_id")
     private int langId;

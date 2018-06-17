@@ -19,13 +19,26 @@
                         </ul>
                         <div sec:authorize="isAuthenticated()">
                             <a th:href="@{/logout}">Logout</a>
-                            <a th:href="@{/profile}">Profile</a>
+                            <!--<a th:href="@{/profile}">Profile</a>-->
                         </div>
-                        <div sec:authorize="isAnonymous()">
-                            <a th:href="@{/login}">Login</a>
+                    <li>
+                        <div sec:authorize="isAuthenticated()" class="dropdown">
+                            <div class="dropdown-toggle" type="text" data-toggle="dropdown">Profile
+                                <span class="caret"></span>
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li><a th:href="@{/profile}">Show product</a>
+                                <li><a th:href="@{/userinfo/user}">Edit User</a></li>
+                                <li><a th:href="@{/userinfo/password}">Edit password</a></li>
+                            </ul>
                         </div>
                     </li>
-                    <li class="dropdown default-dropdown">
+
+                    <div sec:authorize="isAnonymous()">
+                        <a th:href="@{/login}">Login</a>
+                    </div>
+                    </li>
+                    <li sec:authorize="isAuthenticated()" class="dropdown default-dropdown">
                         <a th:href="@{/product/add}">Add product <i class="fa fa-caret-down"></i></a>
 
                     </li>
