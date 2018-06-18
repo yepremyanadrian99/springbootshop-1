@@ -42,12 +42,20 @@ public class User {
 	@Column(name = "last_name")
 	@NotEmpty(message = "*Please provide your last name")
 	private String lastName;
+
+	@Length(min=9,max=9,message = "*Your phone number must have  9 characters")
+	@Column(name = "phone_number")
+	@NotEmpty(message = "*Please provide your phone_number")
+	private String phoneNumber;
+
+	@Column(name = "image_url")
+	private String imageUrl;
+
 	@Column(name = "active")
 	private int active;
+
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-
-
 	private Set<Role> roles;
 
 	public int getId() {
@@ -106,4 +114,19 @@ public class User {
 		this.roles = roles;
 	}
 
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 }

@@ -9,12 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 @Service
 public class UserService {
+
+    private static String UPLOAD_DIR = System.getProperty("user.dir")+File.separator+"images"+File.separator+"user"+File.separator;
+
     private final JdbcTemplate jdbcTemplate;
     @Autowired
     private UserRepository userRepository;
@@ -33,13 +42,28 @@ public class UserService {
     }
 
     //@Override
-    public void saveUser(User user) {
+    public void saveUser(User user, MultipartFile multipartFiles) {
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
         Role userRole = roleRepository.findByRole("CLIENT");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-        userRepository.save(user);
+
+        String filename;
+        try {
+            byte[] bytes = multipartFiles.getBytes();
+
+            filename = multipartFiles.getOriginalFilename();
+
+            Path path = Paths.get(UPLOAD_DIR + File.separator+filename);
+            Files.write(path,bytes);
+
+            user.setImageUrl(filename);
+
+            userRepository.save(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<UserDto> getAllUsers() {
@@ -76,8 +100,23 @@ public class UserService {
         jdbcTemplate.update("UPDATE user SET password = ? WHERE user_id = ?", password, user.getId());
     }
 
-    public void updateUser(User user) {
-        jdbcTemplate.update("UPDATE user SET name = ?, last_name = ? WHERE user_id = ?\n"
-                ,user.getName(),user.getLastName(), user.getId());
+    public void updateUser(User user, MultipartFile multipartFiles) {
+
+        String filename;
+        try {
+            byte[] bytes = multipartFiles.getBytes();
+
+            filename = multipartFiles.getOriginalFilename();
+
+            Path path = Paths.get(UPLOAD_DIR + File.separator+filename);
+            Files.write(path,bytes);
+
+            user.setImageUrl(filename);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        jdbcTemplate.update("UPDATE user SET name = ?, last_name = ?, phone_number = ?, image_url = ? WHERE user_id = ?\n"
+                ,user.getName(),user.getLastName(),user.getPhoneNumber(),user.getImageUrl(), user.getId());
     }
 }

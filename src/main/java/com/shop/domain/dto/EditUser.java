@@ -1,5 +1,6 @@
 package com.shop.domain.dto;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class EditUser {
@@ -14,14 +15,11 @@ public class EditUser {
     @NotEmpty(message = "*Please provide your last name")
     private String lastName;
 
-    public EditUser() {
-    }
-    public EditUser(int id, String email, String name, String lastName) {
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        this.lastName = lastName;
-    }
+    @Length(min=9,max=9,message = "*Your phone number must have  9 characters")
+    @NotEmpty(message = "*Please provide your phone_number")
+    private String phoneNumber;
+
+    private String imageUrl;
 
     public int getId() {
         return id;
@@ -49,5 +47,19 @@ public class EditUser {
     }
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

@@ -7,27 +7,15 @@ public class EditPassword {
 
     @Length(min = 5, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
-    @org.springframework.data.annotation.Transient
     private String oldPassword;
 
     @Length(min = 5, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
-    @org.springframework.data.annotation.Transient
     private String newPassword;
 
     @Length(min = 5, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
-    @org.springframework.data.annotation.Transient
-    private String repitPassword;
-
-    public EditPassword() {
-
-    }
-    public EditPassword(String oldPassword, String newPassword, String repitPassword) {
-        this.oldPassword = oldPassword;
-        this.newPassword = newPassword;
-        this.repitPassword = repitPassword;
-    }
+    private String repeatPassword;
 
     public String getOldPassword() {
         return oldPassword;
@@ -43,11 +31,11 @@ public class EditPassword {
         this.newPassword = newPassword;
     }
 
-    public String getRepitPassword() {
-        return repitPassword;
+    public String getRepeatPassword() {
+        return repeatPassword;
     }
-    public void setRepitPassword(String repitPassword) {
-        this.repitPassword = repitPassword;
+    public void setRepitPassword(String repeatPassword) {
+        this.repeatPassword = repeatPassword;
     }
 }
 

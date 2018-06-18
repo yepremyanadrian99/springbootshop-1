@@ -36,7 +36,8 @@ CREATE TABLE `categories` (
   `level` int(11) UNSIGNED NOT NULL DEFAULT '1',
   `status` int(11) NOT NULL DEFAULT '0',
   `position` int(11) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT  CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
+
 
 --
 -- Dumping data for table `categories`
@@ -407,7 +408,7 @@ CREATE TABLE `category_descriptions` (
   `name` varchar(255) NOT NULL DEFAULT '',
   `description` varchar(255) DEFAULT NULL,
   `lang_id` int(11) NOT NULL DEFAULT '1'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `category_descriptions`
@@ -776,7 +777,7 @@ CREATE TABLE `category_feature_rel` (
   `id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `feature_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `category_feature_rel`
@@ -801,7 +802,7 @@ CREATE TABLE `feature_variants` (
   `feature_id` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `product_feature_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `feature_variants`
@@ -828,22 +829,22 @@ CREATE TABLE `feature_variant_descriptions` (
   `variant` varchar(255) NOT NULL DEFAULT '',
   `description` mediumtext,
   `lang_id` int(11) NOT NULL DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `feature_variant_descriptions`
 --
 
 INSERT INTO `feature_variant_descriptions` (`id`, `variant_id`, `variant`, `description`, `lang_id`) VALUES
-(1, 1, 'karmir', 'karmir', 1),
+(1, 1, 'կարմիր', 'կարմիր', 1),
 (2, 1, 'red', 'red', 2),
-(3, 1, 'krasny', 'krasny', 3),
-(4, 2, 'kapuyt', 'kapuyt', 1),
+(3, 1, 'красный', 'красный', 3),
+(4, 2, 'կապույտ', 'կապույտ', 1),
 (5, 2, 'blue', 'blue', 2),
-(6, 2, 'sinii', 'sinii', 3),
-(7, 3, 'BMV', 'spitak', 1),
+(6, 2, 'синий', 'синий', 3),
+(7, 3, 'BMV', 'սպիտակ', 1),
 (8, 3, 'BMV', 'white', 2),
-(9, 3, 'BMV', 'belyi', 3),
+(9, 3, 'BMV', 'белый', 3),
 (10, 4, 'mercedes', NULL, 1),
 (11, 4, 'mercedes', NULL, 2),
 (12, 4, 'mercedes', NULL, 3),
@@ -865,7 +866,7 @@ CREATE TABLE `images` (
   `id` int(11) NOT NULL,
   `url` varchar(255) NOT NULL,
   `product_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `images`
@@ -912,7 +913,7 @@ CREATE TABLE `languages` (
   `code` varchar(5) CHARACTER SET utf8 NOT NULL,
   `name` varchar(10) CHARACTER SET utf8 NOT NULL,
   `current_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `languages`
@@ -938,7 +939,7 @@ CREATE TABLE `products` (
   `views` int(11) NOT NULL DEFAULT '0',
   `top` int(11) NOT NULL DEFAULT '0',
   `status` int(11) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `products`
@@ -1021,7 +1022,7 @@ CREATE TABLE `product_descriptions` (
   `name` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `description` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `lang_id` int(11) DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `product_descriptions`
@@ -1096,7 +1097,7 @@ CREATE TABLE `product_features` (
   `id` int(11) NOT NULL,
   `status` int(11) NOT NULL,
   `type` enum('checkbox','select','radio','') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `product_features`
@@ -1121,7 +1122,7 @@ CREATE TABLE `product_features_descriptions` (
   `name` varchar(255) NOT NULL DEFAULT '',
   `full_description` mediumtext,
   `lang_id` int(11) NOT NULL DEFAULT '1'
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `product_features_descriptions`
@@ -1129,8 +1130,8 @@ CREATE TABLE `product_features_descriptions` (
 
 INSERT INTO `product_features_descriptions` (`id`, `feature_id`, `name`, `full_description`, `lang_id`) VALUES
 (1, 1, 'color', 'color', 2),
-(2, 1, 'guyn', 'guyn', 1),
-(3, 1, 'cvet', 'cvet', 3),
+(2, 1, 'գույն', 'գույն', 1),
+(3, 1, 'цвет', 'цвет', 3),
 (4, 2, 'model', NULL, 1),
 (5, 2, 'model', NULL, 2),
 (6, 2, 'model', NULL, 3),
@@ -1153,7 +1154,7 @@ CREATE TABLE `product_variant_rel` (
   `variant_id` int(11) DEFAULT NULL,
   `feature_id` int(11) NOT NULL DEFAULT '0',
   `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `product_variant_rel`
@@ -1235,7 +1236,7 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `role_id` int(11) NOT NULL,
   `role` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `role`
@@ -1250,26 +1251,33 @@ INSERT INTO `role` (`role_id`, `role`) VALUES
 --
 -- Table structure for table `user`
 --
-
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `user_id` int(11) NOT NULL,
-  `active` int(11) DEFAULT NULL,
-  `email` varchar(255) NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `user_id`      int(11) NOT NULL,
+  `active`       int(11) DEFAULT NULL,
+  `email`        varchar(255) NOT NULL,
+  `last_name`    varchar(255) NOT NULL,
+  `name`         varchar(255) NOT NULL,
+  `phone_number` varchar(255) ,
+  `image_url`    varchar(255) ,
+  `password`     varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
+
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `active`, `email`, `last_name`, `name`, `password`) VALUES
-(1, 1, 'vigenshakaryan@gmail.com', 'Shaqaryan', 'Vigen', '$2a$10$J4tdVPxmnAUZbWKnjUKLLeKXZtEYwwZGz7ZtT5xTZYqwyy3t/TCuS'),
-(2, 1, 'vasdas@gmail.com', 'asad', 'sdfsfsd', '$2a$10$h66MZxG4k3HCMHvXCrKOx.3s2NWsSK7RypSqEPhF3S9aESx5YvpOS'),
-(3, 1, 'sdfsdfsdfsd@gmail.com', 'ssdfsdfs', 'sdfsdfsd', '$2a$10$Jw1tOYok3Z29kryTCQuKVuYol1PHBlzajFmEAyfCbGJi3/hynB15K'),
-(4, 1, 'sdfsdfsdf@gmail.com', 'sdfsdfsdf', 'sdfsdfsdf', '$2a$10$YOB00Ay6oYQEEJPOFDpBHeDihhxxqNgTTi5.yzr/1hwLpJuciRZEe');
+INSERT INTO `user` (`user_id`, `active`, `email`, `last_name`, `name`,`phone_number`,`image_url`, `password`) VALUES
+  (1, 1, 'vigenshakaryan@gmail.com', 'shakaryan', 'vigen ','077123456','40-viber image.jpg',
+   '$2a$10$J4tdVPxmnAUZbWKnjUKLLeKXZtEYwwZGz7ZtT5xTZYqwyy3t/TCuS'),
+  (2, 1, 'vasdas@gmail.com', 'asad', 'sdfsfsd','077123456','40-viber image.jpg', '$2a$10$h66MZxG4k3HCMHvXCrKOx.3s2NWsSK7RypSqEPhF3S9aESx5YvpOS'),
+  (3, 1, 'sdfsdfsdfsd@gmail.com', 'ssdfsdfs', 'sdfsdfsd','077123456','40-viber image.jpg',
+   '$2a$10$Jw1tOYok3Z29kryTCQuKVuYol1PHBlzajFmEAyfCbGJi3/hynB15K'),
+  (4, 1, 'sdfsdfsdf@gmail.com', 'sdfsdfsdf', 'sdfsdfsdf','077123456','40-viber image.jpg',
+   '$2a$10$YOB00Ay6oYQEEJPOFDpBHeDihhxxqNgTTi5.yzr/1hwLpJuciRZEe'),
+  (5, 1, 'yepremyanadrian@mail.ru', 'Yepremyan', 'Adrian','077123456','40-viber image.jpg',
+   '$2a$10$mcs6kik5RtLjzLM9L.u8AuaOn0LMOMiOWsQIXK3Pn1pAOGHuhMRH2');
 
 -- --------------------------------------------------------
 
@@ -1282,7 +1290,7 @@ CREATE TABLE `user_role` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 DEFAULT COLLATE utf8_unicode_ci;
 
 --
 -- Dumping data for table `user_role`
